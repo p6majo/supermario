@@ -1,7 +1,5 @@
 package edu.q2.supermario;
 
-import edu.q2.supermario.nrw.datenstrukturen.linear.List;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
