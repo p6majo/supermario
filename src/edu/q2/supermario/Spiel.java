@@ -1,4 +1,4 @@
-package edu.q2.supermario;
+package src.edu.q2.supermario;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,6 +40,7 @@ public class Spiel {
         spieler = new List<>();
         laeuft = false;
         highScore = ladeHighScore();
+        welt = new Welt();
     }
 
     /*
@@ -80,10 +81,12 @@ public class Spiel {
     public void spielStarten(){
         zeit = 0;
         timer = new Timer();
+        laeuft = true;
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-               zeitSchritt();
+               if (laeuft) 
+                    zeitSchritt();
             }
         }, 0, 1000);
         System.out.println("timer started");

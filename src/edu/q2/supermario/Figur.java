@@ -1,4 +1,4 @@
-package edu.q2.supermario;
+package src.edu.q2.supermario;
 
 /**
  * The class Figur fürs SuperMario-Spiel
