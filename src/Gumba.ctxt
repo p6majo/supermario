@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Gumba
+comment0.text=\n\ The\ class\ Koopa\n\n\ @author\ p6majo\n\ @version\ 2020-11-25\n
+comment1.params=pSpiel
+comment1.target=Gumba(src.edu.q2.src.Spiel)
+comment1.text=\n\n\ \ \ \ \ \ \ \ \ \ \ Constructors\ \ \ \ \ \ \ \ \ **********\n\n
+comment2.params=
+comment2.target=java.lang.String\ toString()
+comment2.text=\n\n\ \ \ \ \ \ \ \ \ \ \ Overrides\ \ \ \ \ \ \ \ \ \ \ \ ************\n\n
+numComments=3
