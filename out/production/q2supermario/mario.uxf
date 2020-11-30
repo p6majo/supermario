@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>273</y>
+      <w>245</w>
+      <h>231</h>
+    </coordinates>
+    <panel_attributes>Spieler
+--
+-lebenszahl: int
+-muenzen: int
+-groesse: int
+-anfangsgroesse:int
+-punkte: int
+--
++Spieler(pSpiel:Spiel,pLebenszahl:int,
+			pMuenzen:int,pGroesse:int)
++springe()
++sammeln(pSammelbar: Sammelbar)
++nimmtSchaden()
+
++getLebenszahl():int
++getMuenzen():int
++getGroesse():int
++getPunkte():int
+
+--
++ducken()
++sliden()
++ballern()
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>266</x>
+      <y>280</y>
+      <w>189</w>
+      <h>203</h>
+    </coordinates>
+    <panel_attributes>Gegner
+--
+--
++Gegner(pSpiel: Spiel)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>203</x>
+      <y>147</y>
+      <w>147</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Figur
+--
+-spiel: pSpiel
+-x:double
+-y:double
+-v:double
+--
++Figur(pSpiel:Spiel)
++bewegeRechts()
++bewegeLinks()
++getSpiel(): Spiel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>84</x>
+      <y>196</y>
+      <w>133</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>189</y>
+      <w>56</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>252</x>
+      <y>532</y>
+      <w>161</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>Pflanze
+--
+
+
+--
++Pflanze(pSpiel: Spiel)
++waechst()
++schrumpft()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>273</x>
+      <y>476</y>
+      <w>63</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>476</x>
+      <y>476</y>
+      <w>196</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>Gumba
+--
+--
++Gumba(pSpiel: Spiel)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>448</x>
+      <y>455</y>
+      <w>119</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>399</x>
+      <y>665</y>
+      <w>161</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>Koopa
+--
+--
++Koopa(pSpiel: Spiel)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>497</x>
+      <y>623</y>
+      <w>21</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>616</x>
+      <y>189</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Muenze
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>602</x>
+      <y>301</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Pilz
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>343</x>
+      <y>168</y>
+      <w>287</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;390.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>742</x>
+      <y>210</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Block
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>805</x>
+      <y>301</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Stein
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>861</x>
+      <y>252</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Fragezeichen</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>777</x>
+      <y>224</y>
+      <w>70</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>784</x>
+      <y>224</y>
+      <w>133</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>707</x>
+      <y>294</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Roehre
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>742</x>
+      <y>224</y>
+      <w>42</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>693</x>
+      <y>371</y>
+      <w>294</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>Welt
+--
+-laenge: int
+-breite: int
+-bloecke: Block[][]
+--
++gibAusschnitt(xpos: int, ypos:int, laenge: int, breite:int): Block[][]
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1001</x>
+      <y>210</y>
+      <w>252</w>
+      <h>441</h>
+    </coordinates>
+    <panel_attributes>Spiel
+--
+-maxSpielerZahl: int
+-spielerZahl: int
+-timer: Timer
+-laeuft:boolean
+--
++Spiel(pMaxSpielerZahl:int)
++spielerAnmelden(pSpieler: Spieler)
++spielStarten()
++spielPausieren()
++spielFortsetzen()
++spielBeenden()
++aktualisiereHighScore()
++zeigeHighScore()
++naechsterZeitschritt()
++aktualisiereWelt()
++testeKollisionen()
++aktualisereSpieler()
++getWelt():Welt
++getHighScore():HighScore
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>651</x>
+      <y>112</y>
+      <w>196</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>260.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>833</x>
+      <y>70</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+Sammelbar
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>903</x>
+      <y>126</y>
+      <w>28</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>126</y>
+      <w>224</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1029</x>
+      <y>63</y>
+      <w>147</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>List&lt;Spieler&gt;
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>987</x>
+      <y>84</y>
+      <w>56</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-spieler
+</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0;10.0;210.0;20.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1225</x>
+      <y>63</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Uhr</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1246</x>
+      <y>70</y>
+      <w>105</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-uhr</panel_attributes>
+    <additional_attributes>70.0;10.0;110.0;10.0;110.0;240.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>938</x>
+      <y>252</y>
+      <w>77</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-welt
+</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1330</x>
+      <y>287</y>
+      <w>70</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>HighScore
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1246</x>
+      <y>252</y>
+      <w>189</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-highScore</panel_attributes>
+    <additional_attributes>180.0;50.0;180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1302</x>
+      <y>378</y>
+      <w>161</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>SuperMarioGui
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1316</x>
+      <y>567</y>
+      <w>210</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Kontroller
+--
+
+
+--
++Kontroller(pSpiel:Spiel,pGui:SuperMarioGui)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1414</x>
+      <y>462</y>
+      <w>112</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-gui: SuperMarioGui</panel_attributes>
+    <additional_attributes>10.0;10.0;30.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1246</x>
+      <y>483</y>
+      <w>161</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+-spiel: Spiel</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;120.0</additional_attributes>
+  </element>
+</diagram>
