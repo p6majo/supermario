@@ -1,6 +1,11 @@
 package src;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * The class Figur fürs SuperMario-Spiel
@@ -21,6 +26,7 @@ public abstract class Figur {
     private double dt = 0.05;//Zeitintervall;
     private double sprungV = 3.; //Sprunggeschwindigkeit
     private double laufV = 3.; //Laufgeschwindigkeit
+    private BufferedImage img;
 
     /*
      *********************************************
@@ -66,6 +72,7 @@ public abstract class Figur {
 
     public Bewegung getBewegung(){ return bewegung;}
     public Spiel getSpiel() { return spiel; }
+    public BufferedImage getImage(){return img;}
 
     /*
      ***********************************************
@@ -73,6 +80,19 @@ public abstract class Figur {
      ***********************************************
      */
 
+
+
+    public void setImg(String name){
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource("res/"+name );
+
+        try {
+
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setG(double g) {
         this.g = g;
