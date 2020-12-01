@@ -26,6 +26,7 @@ public abstract class Figur {
     private double dt = 0.05;//Zeitintervall;
     private double sprungV = 3.; //Sprunggeschwindigkeit
     private double laufV = 3.; //Laufgeschwindigkeit
+    private double daempfung =0.8; //Reibung in der Luft
     private BufferedImage img;
 
     /*
@@ -110,6 +111,8 @@ public abstract class Figur {
         this.laufV = laufV;
     }
 
+    public void setDaempfung(double pDaempfung){daempfung = pDaempfung;}
+
     public void setX(double x) {
         this.x = x;
     }
@@ -150,7 +153,7 @@ public abstract class Figur {
      */
     public  void act(){
         x=x+vx*dt;
-        vx = vx*0.9; //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
+        vx = vx*daempfung; //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
         //werden, damit die Pilze nicht abgebremst werden.
         if (bewegung==Bewegung.fallen) {
             y = y + vy * dt;
