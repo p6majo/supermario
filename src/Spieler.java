@@ -1,6 +1,11 @@
 package src;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * The class Spieler
@@ -37,6 +42,8 @@ public class Spieler extends Figur{
         groesse = pGroesse;
         anfangsGroesse = pGroesse;
         punkte = 0;
+
+       setImg("mario.png");
     }
 
     /*
@@ -186,7 +193,12 @@ public class Spieler extends Figur{
     public void draw(Graphics2D pScreen, int pZellGroesse,double verschiebeX) {
         pScreen.setColor(Color.MAGENTA);
         pScreen.setStroke(new BasicStroke(4f));
-        pScreen.drawRect(((int) (getX()*pZellGroesse+verschiebeX)),((int) (getY()*pZellGroesse)),pZellGroesse,pZellGroesse);
+
+
+        int x = (int) (getX() * pZellGroesse + verschiebeX);
+        int y = (int) (getY() * pZellGroesse);
+       // pScreen.drawRect(x, y,pZellGroesse,pZellGroesse);
+        pScreen.drawImage(getImage(),x,y,null);
     }
 
     /*

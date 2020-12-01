@@ -1,6 +1,11 @@
 package src;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * The class Figur fürs SuperMario-Spiel
@@ -21,6 +26,8 @@ public abstract class Figur {
     private double dt = 0.05;//Zeitintervall;
     private double sprungV = 3.; //Sprunggeschwindigkeit
     private double laufV = 3.; //Laufgeschwindigkeit
+    private double daempfung =0.8; //Reibung in der Luft
+    private BufferedImage img;
 
     /*
      *********************************************
@@ -66,6 +73,7 @@ public abstract class Figur {
 
     public Bewegung getBewegung(){ return bewegung;}
     public Spiel getSpiel() { return spiel; }
+    public BufferedImage getImage(){return img;}
 
     /*
      ***********************************************
@@ -73,6 +81,19 @@ public abstract class Figur {
      ***********************************************
      */
 
+
+
+    public void setImg(String name){
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource("res/"+name );
+
+        try {
+
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setG(double g) {
         this.g = g;
@@ -89,6 +110,8 @@ public abstract class Figur {
     public void setLaufV(double laufV) {
         this.laufV = laufV;
     }
+
+    public void setDaempfung(double pDaempfung){daempfung = pDaempfung;}
 
     public void setX(double x) {
         this.x = x;
@@ -130,7 +153,7 @@ public abstract class Figur {
      */
     public  void act(){
         x=x+vx*dt;
-        vx = vx*0.9; //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
+        vx = vx*daempfung; //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
         //werden, damit die Pilze nicht abgebremst werden.
         if (bewegung==Bewegung.fallen) {
             y = y + vy * dt;
