@@ -11,20 +11,30 @@ import java.awt.*;
 public abstract class Figur {
 
     /*
+     *************************************************
+     ***           physikalische Parameter  **********
+     *************************************************
+     */
+
+
+    private double g = 2; //Fallbeschleungigung, gibt an, wie schnell eine Figur nach unten faellt
+    private double dt = 0.05;//Zeitintervall;
+    private double sprungV = 3.; //Sprunggeschwindigkeit
+    private double laufV = 3.; //Laufgeschwindigkeit
+
+    /*
      *********************************************
      ***           Attributes           **********
      *********************************************
      */
 
+
     public enum Bewegung {rechts, links, springen, fallen, nichtfallen};
-    public double g = 2; //Fallbeschleungigung
-    public double dt = 0.05;//Zeitintervall;
 
     private double x;
     private double y;
     private Bewegung bewegung;
     private Spiel spiel;
-
 
     private double vx;
     private double vy;
@@ -63,6 +73,23 @@ public abstract class Figur {
      ***********************************************
      */
 
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public void setDt(double dt) {
+        this.dt = dt;
+    }
+
+    public void setSprungV(double sprungV) {
+        this.sprungV = sprungV;
+    }
+
+    public void setLaufV(double laufV) {
+        this.laufV = laufV;
+    }
+
     public void setX(double x) {
         this.x = x;
     }
@@ -75,13 +102,13 @@ public abstract class Figur {
     public void setBewegung(Bewegung pBewegung) {
         switch(pBewegung){
             case rechts:
-                vx = 2;
+                vx = laufV;
                 break;
             case links:
-                vx = -2;
+                vx = -laufV;
                 break;
             case springen:
-                vy = -3;
+                vy = -sprungV;
                 bewegung = Bewegung.fallen; //starte den freien Fall nach dem Sprung
                 break;
             case fallen:
