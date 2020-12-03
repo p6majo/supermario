@@ -88,7 +88,6 @@ public abstract class Figur {
         URL url = loader.getResource("res/"+name );
 
         try {
-
             img = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
