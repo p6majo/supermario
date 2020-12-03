@@ -1,13 +1,18 @@
 package src;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+
 /**
  * The class Welt
  *
  * 0 leer
- * 1 Stein
- * 2 Fragezeichen
- * 3 Roehre
- *
+ *   1 Stein
+ *   2 Fragezeichen
+ *   3 Roehre
  *
  *
  * @author p6majo
@@ -25,6 +30,11 @@ public class Welt {
     private int laenge= 2000;
     private Block[][] bloecke;
 
+    private int typAnzahl=4 ;//leer, Stein, Fragezeichen, Roehre
+    private BufferedImage[] images ;
+
+
+
     /*
      **********************************************
      ****           Constructors         **********
@@ -32,15 +42,22 @@ public class Welt {
      */
 
     public Welt(){
+        images = new BufferedImage[typAnzahl];
+        loadImages();
         bloecke = new Block[zeilen][laenge];
-
         //erzeuge einfache Welt mit sechs Steinbloecken am Boden und ansonsten zufaelligen Zahlen
         for (int l = 0; l < bloecke.length; l++) {
             for (int h = 0; h < bloecke[0].length; h++) {
-                if (l>13) bloecke[l][h]=new Block(h,l,1);
+                if (l>13) {
+                    bloecke[l][h]=new Stein(h,l);
+                    if (images[1]!=null) bloecke[l][h].setImg(images[1]);
+                }
                 else{
                     //setze in 3 Prozent der Faelle einen Stein, ansonsten Luft
-                    if (Math.random()<0.03) bloecke[l][h]=new Block(h,l,1);
+                    if (Math.random()<0.03) {
+                        bloecke[l][h]=new Stein(h,l);
+                        if (images[1]!=null) bloecke[l][h].setImg(images[1]);
+                    }
                     else bloecke[l][h]=new Block(h,l,0);
                 }
             }
@@ -86,13 +103,41 @@ public class Welt {
     public void highlightBlock(double x,double y){
         bloecke[(int) y][(int) x].setHighlighted(true);
     }
+
+    public void draw(Graphics2D pScreen, double pVerschiebeX, int pWidth, int pHeight,int pZellgroesse){
+        if (pScreen!=null) {
+            pScreen.setColor(Color.white);
+            pScreen.fillRect(0, 0,  pWidth,pHeight);
+
+            for (int zeile = 0; zeile < bloecke.length; zeile++ ) {
+                for (int spalte = 0; spalte < bloecke[0].length; spalte++) {
+                    Block block = bloecke[zeile][spalte];
+                    block.draw(pScreen, pVerschiebeX, pZellgroesse);
+                }
+            }
+        }
+    }
     /*
      ***********************************************
      ***           Private methods      ************
      ***********************************************
      */
 
+    private void loadImages(){
+        images[1] = loadImage("stein.png");
+    }
 
+    public BufferedImage loadImage(String name){
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        URL url = loader.getResource("res/"+name );
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
+    }
     /*
      ***********************************************
      ***           Overrides            ************

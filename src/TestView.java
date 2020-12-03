@@ -126,9 +126,8 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
         if (x*zellGroesse>sfWidth/2)
             verschiebeX = sfWidth/2-x*zellGroesse;
 
-        zeichneAusschnitt(verschiebeX);
+        welt.draw(offscreen,verschiebeX,sfWidth+rand,sfHeight+rand,zellGroesse);
         spieler.draw(offscreen,zellGroesse,verschiebeX);
-
 
         onscreen.drawImage(offscreenImage, 0, 0, null);
         hauptKomponente.repaint();
@@ -142,41 +141,9 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
 
     private void zeichneAusschnitt(double verschiebeX){
 
-        Block[][] bloecke = welt.gibBloecke();
-
-        if (offscreen!=null) {
-
-            offscreen.setColor(Color.white);
-            offscreen.fillRect(0, 0, sfWidth + rand, sfHeight + rand);
 
 
-            offscreen.setColor(Color.blue);
 
-            for (int zeile = 0; zeile < bloecke.length; zeile++ ) {
-                for (int spalte = 0; spalte < bloecke[0].length; spalte++) {
-                    Block block = bloecke[zeile][spalte];
-
-                    if (block.getTyp()==1) {
-                        offscreen.setStroke(new BasicStroke(3.f));
-                        offscreen.setColor(Color.RED);
-                    }
-                    else if (block.isHighlighted()) {
-                        offscreen.setStroke(new BasicStroke(2.f));
-                        offscreen.setColor(Color.GREEN);
-                    }
-                    else {
-                        offscreen.setStroke(new BasicStroke(1.f));
-                        offscreen.setColor(Color.BLUE);
-                    }
-                    offscreen.drawRect((int) (spalte*zellGroesse+verschiebeX),zeile*zellGroesse,zellGroesse,zellGroesse);
-
-                    //offscreen.drawString(block.getTyp()+"("+block.getX()+"|"+block.getY()+")",(int) ((spalte+0.1)*zellGroesse+verschiebeX),(int) ((zeile+0.5)*zellGroesse));
-                    offscreen.drawString(block.getTyp()+"",(int) ((spalte+0.4)*zellGroesse+verschiebeX),(int) ((zeile+0.5)*zellGroesse));
-                }
-            }
-
-
-        }
     }
 
 
