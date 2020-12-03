@@ -16,7 +16,7 @@ package src;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version 2015-01-31
  */
-public class QueryResult{
+public class QueryResult {
   private String[][] data;
   private String[] columnNames;
   private String[] columnTypes;
