@@ -17,7 +17,7 @@ public class Nutzer {
     private int nutzerId=-1;
     private String name;
     private String vorname;
-    private int alter;
+    private String nickname;
 
 
     /*
@@ -26,20 +26,13 @@ public class Nutzer {
      **********************************************
      */
 
-    public Nutzer(int nutzerId, String name, String vorname, int alter) {
+    public Nutzer(int nutzerId, String name, String vorname, String nickname) {
         this.nutzerId = nutzerId;
         this.name = name;
         this.vorname = vorname;
-        this.alter = alter;
+        this.nickname =nickname;
     }
 
-    /*
-    public Nutzer(String name, String vorname, int alter) {
-        this.name = name;
-        this.vorname = vorname;
-        this.alter = alter;
-    }
-*/
 
     /*
      ***********************************************
@@ -59,9 +52,7 @@ public class Nutzer {
         return vorname;
     }
 
-    public int getAlter() {
-        return alter;
-    }
+    public String getNickname() { return nickname; }
 
     /*
      ***********************************************
@@ -97,7 +88,7 @@ public class Nutzer {
      */
 
     @Override
-    public String toString() { return "Nutzer "+getNutzerId()+" mit Namen: "+getVorname()+" "+getName()+" im Alter von "+getAlter(); }
+    public String toString() { return "Nutzer "+getNutzerId()+" mit Namen: "+getVorname()+" "+getName()+" mit Spitznamen "+getNickname(); }
 
 
 

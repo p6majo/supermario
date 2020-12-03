@@ -1,10 +1,10 @@
 package src;
 
-import qwirkle.DatabaseConnector;
-import qwirkle.QueryResult;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 /**
@@ -56,7 +56,7 @@ public class DatenbankGui extends JFrame {
         pack();
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("spielstandDB.sqlite");
+        URL url = loader.getResource("res/spielstandDb.db");
         if (url != null) {
             dbc = new DatabaseConnector("", 0, url.getPath(), "", "");
             System.out.println("DatenbankGui: "+"Verbindung zur Datenbank: " + dbc.getErrorMessage());
@@ -86,20 +86,21 @@ public class DatenbankGui extends JFrame {
 
 
     public Nutzer getNutzer(String pName, String pVorname){
-        dbc.executeStatement("Select nutzerId,age From Nutzer WHERE name='"+pName+"' AND vorname ='"+pVorname+"'");
+        dbc.executeStatement("Select nutzerId,nickname From Nutzer WHERE nachname='"+pName+"' AND vorname ='"+pVorname+"'");
         if (dbc.getErrorMessage()!=null)
             System.out.println("Fehlermeldung: "+dbc.getErrorMessage());
         else {
             QueryResult res = dbc.getCurrentQueryResult();
 
+            if (res!=null) {
+                String[][] data = res.getData();
+                if (data.length > 0) {
+                    int nutzerId = Integer.parseInt(data[0][0]);
+                    String nickname = data[0][1];
 
-            String[][] data = res.getData();
-            if (data.length>0) {
-                int nutzerId = Integer.parseInt(data[0][0]);
-                int age = Integer.parseInt(data[0][1]);
-
-                Nutzer nutzer = new Nutzer(nutzerId, pName, pVorname, age);
-                return nutzer;
+                    Nutzer nutzer = new Nutzer(nutzerId, pName, pVorname, nickname);
+                    return nutzer;
+                }
             }
         }
         return null;
@@ -116,8 +117,8 @@ public class DatenbankGui extends JFrame {
             this.checkboxLogin.setSelected(false);
     }
 
-    public void addNutzer(String pName, String pVorname, int pAge){
-        dbc.executeStatement("INSERT into Nutzer(name,vorname,age) Values('"+pName+"','"+pVorname+"',"+pAge+")");
+    public void addNutzer(String pName, String pVorname, String pNickname){
+        dbc.executeStatement("INSERT into Nutzer(nachname,vorname,nickname) Values('"+pName+"','"+pVorname+"','"+pNickname+"')");
         if (dbc.getErrorMessage()!=null)
             System.out.println("Fehlermeldung: "+dbc.getErrorMessage());
     }
@@ -236,6 +237,7 @@ public class DatenbankGui extends JFrame {
         haupkomponente.add(buttonRegist, gbc);
         buttonLogin = new JButton();
         buttonLogin.setText("Login");
+        buttonLogin.addActionListener(actionEvent -> login());
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 1;
@@ -260,6 +262,7 @@ public class DatenbankGui extends JFrame {
         scrollPane1.setViewportView(table1);
         buttonNutzer = new JButton();
         buttonNutzer.setText("Nutzer");
+        buttonNutzer.addActionListener(actionEvent->listeNutzer());
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
