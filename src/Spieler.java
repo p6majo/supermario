@@ -97,10 +97,16 @@ public class Spieler extends Figur{
     }
 
     public void nimmtSchaden(){
-        groesse--;
-        if (groesse<0){
-            lebenszahl--;
-            groesse = anfangsGroesse;
+        if (alive) {
+            groesse--;
+            if (groesse <= 0) {
+                lebenszahl--;
+                System.out.println("Schaden genommen. Neue Lebenszahl: " + lebenszahl);
+                groesse = anfangsGroesse;
+            }
+            if (lebenszahl == 0) {
+                sterbe();
+            }
         }
     }
 
@@ -114,6 +120,16 @@ public class Spieler extends Figur{
 
     public void ballern(){
 
+    }
+
+    public void sterbe(){
+        setImg("tot.png");
+        alive=false;
+    }
+
+    public void erhoehePunkte(){
+        punkte++;
+        System.out.println("neuer Punktestand: "+punkte);
     }
     /*
      ***********************************************
@@ -130,22 +146,21 @@ public class Spieler extends Figur{
 
         double x = getX();
         double y = getY();
-        welt.gibBlock(x,y).setHighlighted(true);
         welt.highlightBlock(x,y);
 
         //ueberpruefe horizontale Bewegung
         if (getVX()>0){
            //Nachbarblock ein Stein
             Block block = welt.gibBlock((int) (x + 1), (int) y);
-            if (block.getTyp()==1){
-                System.out.println(block.getTyp()+" ("+block.getX()+","+block.getY()+")");
+            if (block!=null && block.getTyp()==1){
                 //reflektiere mit abgeschw"achter Geschwindigkeit
                 reflektiere(0.3);
             }
         }
         else if (getVX()<0){
             //Nachbarblock ein Stein
-            if (welt.gibBlock((int) (x-1),(int) y).getTyp()==1){
+            Block block = welt.gibBlock((int) (x - 1), (int) y);
+            if (block!=null && block.getTyp()==1){
                 //reflektiere mit abgeschw"achter Geschwindigkeit
                 reflektiere(0.3);
             }
@@ -158,7 +173,7 @@ public class Spieler extends Figur{
             //nach unten
             //unterer Block ein Stein
              Block block = welt.gibBlock((int) (x+0.5), (int) (y + 1)); //+0.5 um die Mitte des Blocks auf dem Stein zu platzieren
-            if (block.getTyp() ==1){
+            if (block!=null && block.getTyp() ==1){
                 //reflektiere mit abgeschw"achter Geschwindigkeit
                 stoppeFall();
             }
@@ -180,26 +195,13 @@ public class Spieler extends Figur{
 
     @Override
     public void act() {
-        checkKollisionen();
-        super.act();
+        if (alive) {
+            checkKollisionen();
+            super.act();
+        }
     }
 
-    /**
-     * Hier koennen die Bilder fuer die Figuren geladen werden.
-     * @param pScreen
-     * @param pZellGroesse
-     */
-    @Override
-    public void draw(Graphics2D pScreen, int pZellGroesse,double verschiebeX) {
-        pScreen.setColor(Color.MAGENTA);
-        pScreen.setStroke(new BasicStroke(4f));
 
-
-        int x = (int) (getX() * pZellGroesse + verschiebeX);
-        int y = (int) (getY() * pZellGroesse);
-       // pScreen.drawRect(x, y,pZellGroesse,pZellGroesse);
-        pScreen.drawImage(getImage(),x,y,null);
-    }
 
     /*
      ***********************************************

@@ -1,5 +1,6 @@
 package src;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +20,7 @@ public class Spiel {
 
     private List<Spieler> spielerListe;
     private List<SuperMarioGui> guiListe;
+    private List<Gegner> gegnerListe;
     private int maxSpielerZahl ;
     private int spielerZahl;
     private Uhr uhr;
@@ -27,6 +29,7 @@ public class Spiel {
     private boolean laeuft;
     private Welt welt;
     private HighScore highScore;
+    private Random rnd;
 
 
     /*
@@ -40,13 +43,31 @@ public class Spiel {
         spielerZahl = 0;
         spielerListe = new List<>();
         guiListe = new List<>();
+        gegnerListe = new List<>();
+
+        rnd = new Random();
 
         for (int s = 0; s < maxSpielerZahl; s++) {
-            spielerListe.append(new Spieler(this, 10, 0, 1));
+            spielerListe.append(new Spieler(this, 5, 0, 1));
         }
+
+        //erzeuge Welt
+        welt = new Welt();
+
+
+        //erzeuge 10 Gumbas
+
+        for (int i = 0; i < 100; i++) {
+            Gumba gumba = new Gumba(this);
+
+          gumba.setX(rnd.nextInt(welt.getBreite()));
+          gumba.setY(rnd.nextInt(welt.getHoehe()-6));
+            gegnerListe.append(gumba);
+        }
+
         laeuft = false;
         highScore = ladeHighScore();
-        welt = new Welt();
+
     }
 
     /*
@@ -60,6 +81,14 @@ public class Spiel {
 
     public HighScore getHighScore(){
         return highScore;
+    }
+
+    public List<Gegner> getGegner(){
+        return gegnerListe;
+    }
+
+    public List<Spieler> getSpieler(){
+        return spielerListe;
     }
 
     public Spieler getSpieler(int pNr){
@@ -89,6 +118,15 @@ public class Spiel {
      ***********************************************
      */
 
+    public void entferneGegner(Gegner gegner){
+        gegnerListe.toFirst();
+        while(gegnerListe.hasAccess()){
+            if (gegner.equals(gegnerListe.getContent())){
+                gegnerListe.remove();
+            }
+            gegnerListe.next();
+        }
+    }
 
     public void spielerAnmelden(Spieler pSpieler){
         if (spielerZahl<maxSpielerZahl){
@@ -104,7 +142,7 @@ public class Spiel {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-               if (laeuft) 
+                if (laeuft)
                     zeitSchritt();
             }
         }, 0, 33);
@@ -154,6 +192,12 @@ public class Spiel {
         while(spielerListe.hasAccess()){
             spielerListe.getContent().act();
             spielerListe.next();
+        }
+
+        gegnerListe.toFirst();
+        while(gegnerListe.hasAccess()){
+            gegnerListe.getContent().act();
+            gegnerListe.next();
         }
 
         //aktualisiere alle Guis

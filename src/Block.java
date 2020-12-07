@@ -110,8 +110,8 @@ public void draw(Graphics2D pScreen,double pVerschiebeX, int pZellgroesse){
         pScreen.drawImage(img,xPos,yPos,null);
     }
     else {
-        pScreen.drawRect(xPos, yPos, pZellgroesse, pZellgroesse);
-        pScreen.drawString(getTyp() + "", (int) ((x + 0.4) * pZellgroesse + pVerschiebeX), (int) ((y + 0.5) * pZellgroesse));
+       // pScreen.drawRect(xPos, yPos, pZellgroesse, pZellgroesse);
+       // pScreen.drawString(getTyp() + "", (int) ((x + 0.4) * pZellgroesse + pVerschiebeX), (int) ((y + 0.5) * pZellgroesse));
 
         //pScreen.drawString(block.getTyp()+"("+block.getX()+"|"+block.getY()+")",(int) ((spalte+0.1)*zellGroesse+verschiebeX),(int) ((zeile+0.5)*zellGroesse));
     }

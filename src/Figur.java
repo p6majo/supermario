@@ -26,7 +26,7 @@ public abstract class Figur {
     private double dt = 0.05;//Zeitintervall;
     private double sprungV = 3.; //Sprunggeschwindigkeit
     private double laufV = 3.; //Laufgeschwindigkeit
-    private double daempfung =0.8; //Reibung in der Luft
+    private double daempfung =0.2; //Reibung in der Luft
     private BufferedImage img;
 
     /*
@@ -45,6 +45,7 @@ public abstract class Figur {
 
     private double vx;
     private double vy;
+    protected boolean alive;
 
     /*
      **********************************************
@@ -54,6 +55,7 @@ public abstract class Figur {
 
     public Figur(Spiel pSpiel){
     spiel = pSpiel;
+    alive= true;
 }
 
     /*
@@ -141,6 +143,12 @@ public abstract class Figur {
         }
     }
 
+    public void sterbe(){
+        alive = false;
+        if (this instanceof Gegner)
+            spiel.entferneGegner((Gegner) this);
+    }
+
     /*
      ***********************************************
      ***           Public methods       ************
@@ -151,12 +159,14 @@ public abstract class Figur {
      * Hier wird die allgemeine Bewegung der Figuren festgelegt
      */
     public  void act(){
-        x=x+vx*dt;
-        vx = vx*daempfung; //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
-        //werden, damit die Pilze nicht abgebremst werden.
-        if (bewegung==Bewegung.fallen) {
-            y = y + vy * dt;
-            vy = vy + g * dt;
+        if (alive) {
+            x = x + vx * dt;
+            vx = vx * (1. - daempfung); //Luftwiderstand, eventuell muss dass nur in der Spielerklasse implementiert
+            //werden, damit die Pilze nicht abgebremst werden.
+            if (bewegung == Bewegung.fallen) {
+                y = y + vy * dt;
+                vy = vy + g * dt;
+            }
         }
     };
 
@@ -178,7 +188,16 @@ public abstract class Figur {
         bewegung = Bewegung.fallen;
     }
 
-    public abstract void draw(Graphics2D pScreen, int pZellGroesse,double pVerschiebeX);
+    public void draw(Graphics2D pScreen, int pZellGroesse,double pVerschiebeX){
+        pScreen.setColor(Color.MAGENTA);
+        pScreen.setStroke(new BasicStroke(4f));
+
+
+        int x = (int) (getX() * pZellGroesse +pVerschiebeX);
+        int y = (int) (getY() * pZellGroesse);
+        // pScreen.drawRect(x, y,pZellGroesse,pZellGroesse);
+        pScreen.drawImage(getImage(),x,y,null);
+    }
     /*
      ***********************************************
      ***           Private methods      ************
