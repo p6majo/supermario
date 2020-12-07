@@ -72,7 +72,7 @@ public class Gegner  extends Figur{
      */
     @Override
     public void draw(Graphics2D pScreen, int pZellGroesse,double pVerschiebeX) {
-
+        super.draw(pScreen,pZellGroesse,pVerschiebeX);
     }
     /*
      ***********************************************

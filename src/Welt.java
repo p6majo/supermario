@@ -52,6 +52,13 @@ public class Welt {
                     bloecke[l][h]=new Stein(h,l);
                     if (images[1]!=null) bloecke[l][h].setImg(images[1]);
                 }
+                else if (l==13){
+                    if (Math.random()<0.2) {
+                        bloecke[l][h]=new Stein(h,l);
+                        if (images[1]!=null) bloecke[l][h].setImg(images[1]);
+                    }
+                    else bloecke[l][h]=new Block(h,l,0);
+                }
                 else{
                     //setze in 3 Prozent der Faelle einen Stein, ansonsten Luft
                     if (Math.random()<0.03) {
@@ -75,6 +82,13 @@ public class Welt {
         return bloecke;
     }
 
+    public int getHoehe(){
+        return zeilen;
+    }
+
+    public int getBreite(){
+        return laenge;
+    }
     /**
      * Beachte, dass x der Spalte und y der Zeile entspricht
      *
@@ -83,6 +97,7 @@ public class Welt {
      * @return
      */
     public Block gibBlock(double x, double y){
+        if (x<0||y<0||x>=bloecke[0].length||y>=bloecke.length) return null;
         return bloecke[(int) y][(int) x];
     }
 

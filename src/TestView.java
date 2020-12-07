@@ -26,7 +26,7 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
 
 
     private Spieler spieler;
-    private Welt welt;
+    private Spiel spiel;
 
 
 
@@ -57,14 +57,14 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
      **********************************************
      */
 
-    public TestView(Welt pWelt, Spieler pZentralerSpieler) {
+    public TestView(Spiel pSpiel, Spieler pZentralerSpieler) {
         // Frame-Initialisierung
         super("TestView zur Darstellung der Super Mario Welt");
         addKeyListener(this);
 
 
         spieler = pZentralerSpieler;
-        welt = pWelt;
+        spiel = pSpiel;
 
         hauptKomponente = new JPanel();
         hauptKomponente.setBorder(BorderFactory.createTitledBorder(BorderFactory.createRaisedBevelBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, new Color(-10084576)));
@@ -126,8 +126,18 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
         if (x*zellGroesse>sfWidth/2)
             verschiebeX = sfWidth/2-x*zellGroesse;
 
-        welt.draw(offscreen,verschiebeX,sfWidth+rand,sfHeight+rand,zellGroesse);
+        //zeichne Welt
+        spiel.getWelt().draw(offscreen,verschiebeX,sfWidth+rand,sfHeight+rand,zellGroesse);
+        //zeichne Spieler
         spieler.draw(offscreen,zellGroesse,verschiebeX);
+
+        //zeichne Gegner
+        List<Gegner> gegner = spiel.getGegner();
+        gegner.toFirst();
+        while(gegner.hasAccess()){
+            gegner.getContent().draw(offscreen,zellGroesse,verschiebeX);
+            gegner.next();
+        }
 
         onscreen.drawImage(offscreenImage, 0, 0, null);
         hauptKomponente.repaint();
@@ -200,7 +210,9 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
         Spieler spieler  = spiel.getSpieler(0);
         spieler.setX(0);
         spieler.setY(13);
-        TestView testView =  new TestView(spiel.getWelt(), spieler);
+
+
+        TestView testView =  new TestView(spiel, spieler);
         spiel.meldeGuiAn(testView);
         spiel.spielStarten();
     }

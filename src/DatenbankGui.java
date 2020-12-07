@@ -1,9 +1,8 @@
 package src;
 
-import qwirkle.DatabaseConnector;
-import qwirkle.QueryResult;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.net.URL;
 
@@ -21,8 +20,8 @@ public class DatenbankGui extends JFrame {
     private JButton buttonLogin;
     private JCheckBox checkboxLogin;
     private JButton buttonNutzer;
-    private JButton buttonErgebnisse;
-    private JTable table1;
+    private JButton buttonLevel;
+    private JTable table;
     private JPanel haupkomponente;
 
     //Datenbank
@@ -56,7 +55,7 @@ public class DatenbankGui extends JFrame {
         pack();
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("spielstandDB.sqlite");
+        URL url = loader.getResource("res/spielstandDb.db");
         if (url != null) {
             dbc = new DatabaseConnector("", 0, url.getPath(), "", "");
             System.out.println("DatenbankGui: "+"Verbindung zur Datenbank: " + dbc.getErrorMessage());
@@ -86,20 +85,21 @@ public class DatenbankGui extends JFrame {
 
 
     public Nutzer getNutzer(String pName, String pVorname){
-        dbc.executeStatement("Select nutzerId,age From Nutzer WHERE name='"+pName+"' AND vorname ='"+pVorname+"'");
+        dbc.executeStatement("Select nutzerId,nickname From Nutzer WHERE nachname='"+pName+"' AND vorname ='"+pVorname+"'");
         if (dbc.getErrorMessage()!=null)
             System.out.println("Fehlermeldung: "+dbc.getErrorMessage());
         else {
             QueryResult res = dbc.getCurrentQueryResult();
 
+            if (res!=null) {
+                String[][] data = res.getData();
+                if (data.length > 0) {
+                    int nutzerId = Integer.parseInt(data[0][0]);
+                    String nickname = data[0][1];
 
-            String[][] data = res.getData();
-            if (data.length>0) {
-                int nutzerId = Integer.parseInt(data[0][0]);
-                int age = Integer.parseInt(data[0][1]);
-
-                Nutzer nutzer = new Nutzer(nutzerId, pName, pVorname, age);
-                return nutzer;
+                    Nutzer nutzer = new Nutzer(nutzerId, pName, pVorname, nickname);
+                    return nutzer;
+                }
             }
         }
         return null;
@@ -111,16 +111,30 @@ public class DatenbankGui extends JFrame {
         Nutzer nutzer = getNutzer(name,vorname);
         if (nutzer!=null){
             this.checkboxLogin.setSelected(true);
+            textFieldNick.setText(nutzer.getNickname());
+            textFieldName.setEnabled(false);
+            textFieldVorname.setEnabled(false);
+            textFieldNick.setEnabled(false);
         }
         else
             this.checkboxLogin.setSelected(false);
     }
 
-    public void addNutzer(String pName, String pVorname, int pAge){
-        dbc.executeStatement("INSERT into Nutzer(name,vorname,age) Values('"+pName+"','"+pVorname+"',"+pAge+")");
+    public void addNutzer(String pName, String pVorname, String pNickname){
+        //check, whether user has been created already
+        Nutzer nutzer  = getNutzer(pName,pVorname);
+        if (nutzer==null) {
+            dbc.executeStatement("INSERT into Nutzer(nachname,vorname,nickname) Values('" + pName + "','" + pVorname + "','" + pNickname + "')");
+            login();
+        }
+        else {
+            System.out.println("Nutzer existiert schon");
+            login();
+        }
         if (dbc.getErrorMessage()!=null)
             System.out.println("Fehlermeldung: "+dbc.getErrorMessage());
     }
+
 
     public void listeNutzer(){
         String out = "";
@@ -130,22 +144,81 @@ public class DatenbankGui extends JFrame {
         else {
             QueryResult res = dbc.getCurrentQueryResult();
 
-            for (int i = 0; i < res.getColumnCount(); i++) {
-                out += res.getColumnNames()[i] + "\t";
-            }
 
-            out += "\n";
-            out += "_________________________________________________________\n";
+            if (res!=null) {
 
-            String[][] data = res.getData();
-            for (int i = 0; i < data.length; i++) {
-                for (int j = 0; j < data[i].length; j++) {
-                    out += data[i][j] + "\t";
+                DefaultTableModel model = new DefaultTableModel(new String[]{"", "", "", ""}, 0);
+
+                model.addRow(new String[]{res.getColumnNames()[0], res.getColumnNames()[1], res.getColumnNames()[2], res.getColumnNames()[3]});
+
+
+                for (String[] row: res.getData())
+                    model.addRow(new String[]{row[0] , row[1], row[2], row[3]});
+
+
+                table.setModel(model);
+
+
+                for (int i = 0; i < res.getColumnCount(); i++) {
+                    out += res.getColumnNames()[i] + "\t";
                 }
-                out += "\n";
-            }
 
-            System.out.println(out);
+                out += "\n";
+                out += "_________________________________________________________\n";
+
+                String[][] data = res.getData();
+                for (int i = 0; i < data.length; i++) {
+                    for (int j = 0; j < data[i].length; j++) {
+                        out += data[i][j] + "\t";
+                    }
+                    out += "\n";
+                }
+
+                System.out.println(out);
+            }
+        }
+    }
+
+    public void listeLevel(){
+        String out = "";
+        dbc.executeStatement("SELECT * FROM 'Level'");
+        if (dbc.getErrorMessage()!=null)
+            System.out.println("Fehlermeldung: "+dbc.getErrorMessage());
+        else {
+            QueryResult res = dbc.getCurrentQueryResult();
+
+
+            if (res!=null) {
+
+                DefaultTableModel model = new DefaultTableModel(new String[]{"", "", ""}, 0);
+
+                model.addRow(new String[]{res.getColumnNames()[0], res.getColumnNames()[1], res.getColumnNames()[2]});
+
+
+                for (String[] row: res.getData())
+                    model.addRow(new String[]{row[0] , row[1], row[2]});
+
+
+                table.setModel(model);
+
+
+                for (int i = 0; i < res.getColumnCount(); i++) {
+                    out += res.getColumnNames()[i] + "\t";
+                }
+
+                out += "\n";
+                out += "_________________________________________________________\n";
+
+                String[][] data = res.getData();
+                for (int i = 0; i < data.length; i++) {
+                    for (int j = 0; j < data[i].length; j++) {
+                        out += data[i][j] + "\t";
+                    }
+                    out += "\n";
+                }
+
+                System.out.println(out);
+            }
         }
     }
 
@@ -229,6 +302,7 @@ public class DatenbankGui extends JFrame {
         haupkomponente.add(textFieldNick, gbc);
         buttonRegist = new JButton();
         buttonRegist.setText("Registrieren");
+        buttonRegist.addActionListener(actionEvent -> addNutzer(textFieldName.getText(),textFieldVorname.getText(),textFieldNick.getText()));
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 0;
@@ -236,6 +310,7 @@ public class DatenbankGui extends JFrame {
         haupkomponente.add(buttonRegist, gbc);
         buttonLogin = new JButton();
         buttonLogin.setText("Login");
+        buttonLogin.addActionListener(actionEvent -> login());
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
         gbc.gridy = 1;
@@ -256,22 +331,24 @@ public class DatenbankGui extends JFrame {
         gbc.gridheight = 3;
         gbc.fill = GridBagConstraints.BOTH;
         haupkomponente.add(scrollPane1, gbc);
-        table1 = new JTable();
-        scrollPane1.setViewportView(table1);
+        table = new JTable();
+        scrollPane1.setViewportView(table);
         buttonNutzer = new JButton();
         buttonNutzer.setText("Nutzer");
+        buttonNutzer.addActionListener(actionEvent->listeNutzer());
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         haupkomponente.add(buttonNutzer, gbc);
-        buttonErgebnisse = new JButton();
-        buttonErgebnisse.setText("Ergebnisse");
+        buttonLevel = new JButton();
+        buttonLevel.setText("Level");
+        buttonLevel.addActionListener(actionEvent -> listeLevel());
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        haupkomponente.add(buttonErgebnisse, gbc);
+        haupkomponente.add(buttonLevel, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 4;
