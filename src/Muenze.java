@@ -6,7 +6,7 @@ package src;
  * @author p6majo
  * @version 2020-11-25
  */
-public class Muenze implements Sammelbar {
+public class Muenze extends Block implements Sammelbar {
 
     /*
      *********************************************
@@ -22,6 +22,11 @@ public class Muenze implements Sammelbar {
      **********************************************
      */
 
+     public Muenze(int pX, int pY) {
+        super(pX,pY,4);
+   
+       
+    }
 
     /*
      ***********************************************
