@@ -22,9 +22,9 @@ public abstract class Figur {
      */
 
 
-    private double g = 2; //Fallbeschleungigung, gibt an, wie schnell eine Figur nach unten faellt
+    private double g = 10; //Fallbeschleungigung, gibt an, wie schnell eine Figur nach unten faellt
     private double dt = 0.05;//Zeitintervall;
-    private double sprungV = 3.; //Sprunggeschwindigkeit
+    private double sprungV = 7.; //Sprunggeschwindigkeit
     private double laufV = 3.; //Laufgeschwindigkeit
     private double daempfung =0.2; //Reibung in der Luft
     private BufferedImage img;
@@ -132,8 +132,10 @@ public abstract class Figur {
                 vx = -laufV;
                 break;
             case springen:
-                vy = -sprungV;
-                bewegung = Bewegung.fallen; //starte den freien Fall nach dem Sprung
+                if (bodenKontakt()) {
+                    vy = -sprungV;
+                    bewegung = Bewegung.fallen; //starte den freien Fall nach dem Sprung
+                }
                 break;
             case fallen:
                 break;
@@ -143,11 +145,6 @@ public abstract class Figur {
         }
     }
 
-    public void sterbe(){
-        alive = false;
-        if (this instanceof Gegner)
-            spiel.entferneGegner((Gegner) this);
-    }
 
     /*
      ***********************************************
@@ -155,6 +152,23 @@ public abstract class Figur {
      ***********************************************
      */
 
+
+
+    public void sterbe(){
+        alive = false;
+        if (this instanceof Gegner)
+            spiel.entferneGegner((Gegner) this);
+    }
+
+    public boolean bodenKontakt() {
+        Welt welt = spiel.getWelt();
+        //unterer Block ein Stein
+        Block block = welt.gibBlock((int) (x + 0.5), (int) (y + 1)); //+0.5 um die Mitte des Blocks auf dem Stein zu platzieren
+        if (block != null && block.getTyp() == 1) {
+            return true;
+        }
+        return false;
+    }
     /**
      * Hier wird die allgemeine Bewegung der Figuren festgelegt
      */
@@ -177,6 +191,14 @@ public abstract class Figur {
      */
     public void reflektiere(double pAnteil){
         vx = vx*(-pAnteil);
+    }
+
+    /**
+     * Reflexion in vertikaler Richtung
+     * @param pAnteil
+     */
+    public void reflektiereV(double pAnteil){
+        vy = vy*(-pAnteil);
     }
 
     public void stoppeFall(){
