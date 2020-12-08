@@ -194,8 +194,12 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
             case KeyEvent.VK_SPACE:
                 spieler.setBewegung(Figur.Bewegung.springen);
                 break;
+            case KeyEvent.VK_ESCAPE:
+                System.exit(0);
+                break;
             default:
                 System.out.println(keyEvent.getKeyCode());
+
         }
 
     }

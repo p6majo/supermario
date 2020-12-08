@@ -43,7 +43,7 @@ public class Spieler extends Figur{
         anfangsGroesse = pGroesse;
         punkte = 0;
 
-       setImg("mario.png");
+        setImg("mario.png");
     }
 
     /*
@@ -150,7 +150,7 @@ public class Spieler extends Figur{
 
         //ueberpruefe horizontale Bewegung
         if (getVX()>0){
-           //Nachbarblock ein Stein
+            //Nachbarblock ein Stein
             Block block = welt.gibBlock((int) (x + 1), (int) y);
             if (block!=null && block.getTyp()==1){
                 //reflektiere mit abgeschw"achter Geschwindigkeit
@@ -171,14 +171,17 @@ public class Spieler extends Figur{
         //ueberpruefe vertikale Bewegung
         if (getVY()>=0) {
             //nach unten
-            //unterer Block ein Stein
-             Block block = welt.gibBlock((int) (x+0.5), (int) (y + 1)); //+0.5 um die Mitte des Blocks auf dem Stein zu platzieren
-            if (block!=null && block.getTyp() ==1){
-                //reflektiere mit abgeschw"achter Geschwindigkeit
+            if (bodenKontakt())
                 stoppeFall();
-            }
             else{
                 starteFall();
+            }
+        }
+        else {
+            //nach oben
+            Block block = welt.gibBlock((int) (x + 0.5), (int) (y - 1)); //+0.5 um die Mitte des Blocks auf dem Stein zu platzieren
+            if (block != null && block.getTyp() == 1) {
+                reflektiereV(0.3);
             }
         }
         //TODO
