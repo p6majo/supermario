@@ -27,6 +27,9 @@ public class Spieler extends Figur{
     private int anfangsGroesse;
     private int punkte;
 
+    private Welt welt;
+    private Spiel spiel;
+
 
 
     /*
@@ -37,11 +40,13 @@ public class Spieler extends Figur{
 
     public Spieler(Spiel pSpiel, int pLebenszahl, int pMuenzen, int pGroesse) {
         super(pSpiel);
+        spiel = pSpiel;
         lebenszahl = pLebenszahl;
         muenzen = pMuenzen;
         groesse = pGroesse;
         anfangsGroesse = pGroesse;
         punkte = 0;
+        welt = pSpiel.getWelt();
 
         setImg("mario.png");
     }
@@ -82,13 +87,19 @@ public class Spieler extends Figur{
      ***********************************************
      */
 
-    public void sammeln(Sammelbar pSammelbar){
-        if (pSammelbar instanceof Muenze){
-            muenzen++;
-        }
-        else if (pSammelbar instanceof Pilz) {
-        }
-        else if (pSammelbar instanceof Fragezeichen) {
+    public void sammeln(){
+
+        Block block = welt.gibBlock(getX()+0.5,getY()+0.5);
+
+        if (block instanceof  Sammelbar) {
+
+            if (block instanceof Muenze) {
+                muenzen++;
+                erhoehePunkte();
+                welt.remove(block);
+            }
+            else if (block instanceof Fragezeichen) {
+            }
         }
     }
 
@@ -102,6 +113,7 @@ public class Spieler extends Figur{
             if (groesse <= 0) {
                 lebenszahl--;
                 System.out.println("Schaden genommen. Neue Lebenszahl: " + lebenszahl);
+                spiel.update();
                 groesse = anfangsGroesse;
             }
             if (lebenszahl == 0) {
@@ -125,11 +137,13 @@ public class Spieler extends Figur{
     public void sterbe(){
         setImg("tot.png");
         alive=false;
+        spiel.update();
     }
 
     public void erhoehePunkte(){
         punkte++;
         System.out.println("neuer Punktestand: "+punkte);
+        spiel.update();
     }
     /*
      ***********************************************
@@ -200,6 +214,7 @@ public class Spieler extends Figur{
     public void act() {
         if (alive) {
             checkKollisionen();
+            sammeln();
             super.act();
         }
     }

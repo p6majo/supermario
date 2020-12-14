@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  * @author p6majo
  * @version 2019-06-20
  */
-public class TestView extends JFrame implements SuperMarioGui,KeyListener {
+public class WeltView extends JFrame implements KeyListener {
 
 
     /*
@@ -57,7 +57,7 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
      **********************************************
      */
 
-    public TestView(Spiel pSpiel, Spieler pZentralerSpieler) {
+    public WeltView(Spiel pSpiel, Spieler pZentralerSpieler) {
         // Frame-Initialisierung
         super("TestView zur Darstellung der Super Mario Welt");
         addKeyListener(this);
@@ -120,7 +120,6 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
      */
 
     public void draw() {
-
         double verschiebeX = 0;
         double x = spieler.getX();
         if (x*zellGroesse>sfWidth/2)
@@ -209,15 +208,4 @@ public class TestView extends JFrame implements SuperMarioGui,KeyListener {
 
     }
 
-    public static void main(String[] args) {
-        Spiel spiel = new Spiel(1);
-        Spieler spieler  = spiel.getSpieler(0);
-        spieler.setX(0);
-        spieler.setY(13);
-
-
-        TestView testView =  new TestView(spiel, spieler);
-        spiel.meldeGuiAn(testView);
-        spiel.spielStarten();
-    }
 }

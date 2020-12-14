@@ -217,7 +217,6 @@ public abstract class Figur {
 
         int x = (int) (getX() * pZellGroesse +pVerschiebeX);
         int y = (int) (getY() * pZellGroesse);
-        // pScreen.drawRect(x, y,pZellGroesse,pZellGroesse);
         pScreen.drawImage(getImage(),x,y,null);
     }
     /*
