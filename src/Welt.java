@@ -54,8 +54,8 @@ public class Welt {
                 }
                 else if (l==13){
                     if (Math.random()<0.2) {
-                        bloecke[l][h]=new Muenze(h,l);
-                        if (images[4]!=null) bloecke[l][h].setImg(images[4]);
+                        bloecke[l][h] = new Stein(h,l);
+                        if (images[1]!=null) bloecke[l][h].setImg(images[1]);
                     }
                     else bloecke[l][h]=new Block(h,l,0);
                 }
@@ -64,6 +64,10 @@ public class Welt {
                     if (Math.random()<0.03) {
                         bloecke[l][h]=new Stein(h,l);
                         if (images[1]!=null) bloecke[l][h].setImg(images[1]);
+                    }
+                    else if (Math.random()<0.04) {
+                        bloecke[l][h]=new Muenze(h,l);
+                        if (images[4] != null) bloecke[l][h].setImg(images[4]);
                     }
                     else bloecke[l][h]=new Block(h,l,0);
                 }
@@ -114,6 +118,12 @@ public class Welt {
      ***           Public methods       ************
      ***********************************************
      */
+
+    public void remove(Block pBlock){
+        int zeile = pBlock.getY();
+        int spalte = pBlock.getX();
+        bloecke[zeile][spalte]=new Block(spalte,zeile,0);
+    }
 
     public void highlightBlock(double x,double y){
         bloecke[(int) y][(int) x].setHighlighted(true);

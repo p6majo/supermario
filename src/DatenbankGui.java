@@ -26,6 +26,7 @@ public class DatenbankGui extends JFrame {
 
     //Datenbank
     private DatabaseConnector dbc;
+    private SuperMarioGui superMarioGui;
 
     /*
      *********************************************
@@ -42,8 +43,9 @@ public class DatenbankGui extends JFrame {
      */
 
 
-    public DatenbankGui() {
+    public DatenbankGui(SuperMarioGui pSuperMarioGui) {
         setupUI();
+        superMarioGui = pSuperMarioGui;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(800, 600);
 
@@ -61,6 +63,8 @@ public class DatenbankGui extends JFrame {
             System.out.println("DatenbankGui: "+"Verbindung zur Datenbank: " + dbc.getErrorMessage());
         }
     }
+
+
     /*
      ***********************************************
      ***           Getters              ************
@@ -115,6 +119,7 @@ public class DatenbankGui extends JFrame {
             textFieldName.setEnabled(false);
             textFieldVorname.setEnabled(false);
             textFieldNick.setEnabled(false);
+            superMarioGui.loginNutzer(nutzer);
         }
         else
             this.checkboxLogin.setSelected(false);
@@ -240,11 +245,6 @@ public class DatenbankGui extends JFrame {
     public String toString() {
         return "DatenbankTestGui";
     }
-
-    public static void main(String[] args) {
-        new DatenbankGui();
-    }
-
 
 
     private void setupUI() {

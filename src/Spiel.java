@@ -47,12 +47,14 @@ public class Spiel {
 
         rnd = new Random();
 
+        //erzeuge Welt
+        welt = new Welt();
+
+        //erzeuge Spieler erst nach der Erschaffung der Welt
         for (int s = 0; s < maxSpielerZahl; s++) {
             spielerListe.append(new Spieler(this, 5, 0, 1));
         }
 
-        //erzeuge Welt
-        welt = new Welt();
 
 
         //erzeuge 10 Gumbas
@@ -117,6 +119,14 @@ public class Spiel {
      ***           Public methods       ************
      ***********************************************
      */
+
+    public void update(){
+        this.guiListe.toFirst();
+        while(guiListe.hasAccess()){
+            guiListe.getContent().update();
+            guiListe.next();
+        }
+    }
 
     public void entferneGegner(Gegner gegner){
         gegnerListe.toFirst();
