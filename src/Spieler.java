@@ -1,12 +1,3 @@
-package src;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * The class Spieler
  *
@@ -91,7 +82,7 @@ public class Spieler extends Figur{
 
         Block block = welt.gibBlock(getX()+0.5,getY()+0.5);
 
-        if (block instanceof  Sammelbar) {
+        if (block instanceof Sammelbar) {
 
             if (block instanceof Muenze) {
                 muenzen++;

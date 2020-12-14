@@ -1,4 +1,3 @@
-package src;
 
 /**
  * The class Stein

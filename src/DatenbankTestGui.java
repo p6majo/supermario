@@ -1,6 +1,4 @@
-package src;
 
-import qwirkle.DatabaseConnector;
 
 import javax.swing.*;
 import java.awt.*;

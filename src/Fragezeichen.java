@@ -1,4 +1,4 @@
-package src;
+
 
 /**
  * The class Fragezeichen
@@ -6,7 +6,7 @@ package src;
  * @author p6majo
  * @version 2020-11-25
  */
-public class Fragezeichen extends Block implements Sammelbar{
+public class Fragezeichen extends Block implements Sammelbar {
     public Fragezeichen(int pX,int pY) {
         super(pX, pY,3);
     }

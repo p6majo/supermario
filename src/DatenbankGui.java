@@ -1,4 +1,4 @@
-package src;
+
 
 
 import javax.swing.*;
@@ -57,7 +57,7 @@ public class DatenbankGui extends JFrame {
         pack();
 
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("res/spielstandDb.db");
+        URL url = loader.getResource("spielstandDb.db");
         if (url != null) {
             dbc = new DatabaseConnector("", 0, url.getPath(), "", "");
             System.out.println("DatenbankGui: "+"Verbindung zur Datenbank: " + dbc.getErrorMessage());

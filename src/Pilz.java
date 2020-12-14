@@ -1,4 +1,4 @@
-package src;
+
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ import java.awt.*;
  * @author p6majo
  * @version 2020-11-25
  */
-public class Pilz extends Figur implements Sammelbar{
+public class Pilz extends Figur implements Sammelbar {
 
 
     /*

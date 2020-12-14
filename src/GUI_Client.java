@@ -1,4 +1,4 @@
-package src;
+
 
 /**
 *Text genereted by Simple GUI Extension for BlueJ
@@ -13,7 +13,7 @@ import static java.awt.Font.BOLD;
 import static javax.swing.SwingConstants.CENTER;
 
 
-public class GUI_Client extends JFrame implements SuperMarioGui{
+public class GUI_Client extends JFrame implements SuperMarioGui {
 
 	private JMenuBar menuBar;
 	private JButton pingButton;

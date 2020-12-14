@@ -1,4 +1,4 @@
-package src;
+
 
 /**
  * The class Pflanze
