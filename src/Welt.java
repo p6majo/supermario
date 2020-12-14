@@ -30,7 +30,7 @@ public class Welt {
     private int laenge= 2000;
     private Block[][] bloecke;
 
-    private int typAnzahl=4 ;//leer, Stein, Fragezeichen, Roehre
+    private int typAnzahl=5 ;//leer, Stein, Fragezeichen, Roehre, muenze
     private BufferedImage[] images ;
 
 
@@ -54,8 +54,8 @@ public class Welt {
                 }
                 else if (l==13){
                     if (Math.random()<0.2) {
-                        bloecke[l][h]=new Stein(h,l);
-                        if (images[1]!=null) bloecke[l][h].setImg(images[1]);
+                        bloecke[l][h]=new Muenze(h,l);
+                        if (images[4]!=null) bloecke[l][h].setImg(images[4]);
                     }
                     else bloecke[l][h]=new Block(h,l,0);
                 }
@@ -140,6 +140,7 @@ public class Welt {
 
     private void loadImages(){
         images[1] = loadImage("stein.png");
+        images[4]=loadImage("muenze.png");
     }
 
     public BufferedImage loadImage(String name){
