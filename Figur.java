@@ -87,7 +87,7 @@ public abstract class Figur {
 
     public void setImg(String name){
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("res/"+name );
+        URL url = loader.getResource(name );
 
         try {
             img = ImageIO.read(url);

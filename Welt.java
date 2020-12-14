@@ -155,7 +155,7 @@ public class Welt {
 
     public BufferedImage loadImage(String name){
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        URL url = loader.getResource("res/"+name );
+        URL url = loader.getResource(name );
         BufferedImage img = null;
         try {
             img = ImageIO.read(url);
