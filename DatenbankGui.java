@@ -2,6 +2,8 @@
 
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.net.URL;
@@ -162,7 +164,15 @@ public class DatenbankGui extends JFrame {
 
 
                 table.setModel(model);
-
+                table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                        int row = listSelectionEvent.getFirstIndex();
+                        textFieldVorname.setText((String) model.getValueAt(row,2));
+                        textFieldName.setText((String) model.getValueAt(row,1));
+                        login();
+                    }
+                });
 
                 for (int i = 0; i < res.getColumnCount(); i++) {
                     out += res.getColumnNames()[i] + "\t";
